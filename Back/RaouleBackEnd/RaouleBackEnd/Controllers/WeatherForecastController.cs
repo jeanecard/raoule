@@ -18,6 +18,8 @@ namespace RaouleBackEnd.Controllers
             _logger = logger;
         }
 
+        public ILogger<WeatherForecastController> Logger => _logger;
+
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {

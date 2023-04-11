@@ -23,7 +23,7 @@ namespace Repositories
         }
 
 
-        public async Task<Observation> GetObservationAsync(Guid lieuId, Guid oiseauId, bool trackChanges)
+        public async Task<Observation?> GetObservationAsync(Guid lieuId, Guid oiseauId, bool trackChanges)
         {
             return await FindByCondition(
                 c => c.LieuId.Equals(lieuId) && c.OiseauId.Equals(oiseauId),

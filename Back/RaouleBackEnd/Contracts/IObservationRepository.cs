@@ -8,7 +8,7 @@ namespace Contracts
             Guid? lieuID,
             Guid? oiseauId,
             bool trackChanges);
-        Task<Observation> GetObservationAsync(
+        Task<Observation?> GetObservationAsync(
             Guid lieuId,
             Guid oiseauId,
             bool trackChanges);

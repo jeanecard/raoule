@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LoggerManager;
+using Microsoft.EntityFrameworkCore;
 using Repositories;
 
 namespace RaouleBackEnd.Extensions
@@ -17,7 +18,8 @@ namespace RaouleBackEnd.Extensions
                     }
                     catch (Exception ex)
                     {
-                        //Log errors or do anything you think it's needed
+                        var logger = scope.ServiceProvider.GetRequiredService<HRLoggerManager>();
+                        logger?.LogError(ex.Message);
                         throw;
                     }
                 }

@@ -20,7 +20,7 @@ namespace Repositories
             Delete(oiseau);
         }
 
-        public async Task<Oiseau> GetOiseauAsync(Guid id, bool trackChanges)
+        public async Task<Oiseau?> GetOiseauAsync(Guid id, bool trackChanges)
         {
             return await FindByCondition(
                 c => c.Id.Equals(id),
@@ -30,8 +30,12 @@ namespace Repositories
 
         public async Task<List<Oiseau>> GetOiseauxAsync(bool trackChanges)
         {
-            return await FindAll(trackChanges)
-                .ToListAsync();
+            var result =  await FindAll(trackChanges).ToListAsync();
+            if(result == null)
+            {
+                result = new List<Oiseau>();
+            }
+            return result;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Contracts;
+using LoggerManager;
+using Microsoft.EntityFrameworkCore;
 using Repositories;
 
 namespace RaouleBackEnd.Extensions
@@ -13,6 +15,7 @@ namespace RaouleBackEnd.Extensions
                 sqlServer.MigrationsAssembly("RaouleBackEnd");
                 sqlServer.UseNetTopologySuite();
             }));
-
+        public static void ConfigureLoggerService(this IServiceCollection services) =>
+            services.AddSingleton<ILoggerManager, HRLoggerManager>();
     }
 }

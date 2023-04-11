@@ -20,18 +20,21 @@ namespace Repositories
             Delete(lieu);
         }
 
-        public async Task<LieuObservation> GetLieuObservationAsync(Guid id, bool trackChanges)
+        public async Task<LieuObservation?> GetLieuObservationAsync(Guid id, bool trackChanges)
         {
-            return await FindByCondition(
+            return await  FindByCondition(
                 c => c.Id.Equals(id),
-                trackChanges)
-                      .SingleOrDefaultAsync();
+                trackChanges).SingleOrDefaultAsync();
         }
 
         public async Task<List<LieuObservation>> GetLieuObservationsAsync(bool trackChanges)
         {
-            return await FindAll(trackChanges)
-                .ToListAsync();
+            var result =  await FindAll(trackChanges).ToListAsync();
+            if(result == null)
+            {
+                result = new List<LieuObservation>();
+            }
+            return result;
         }
     }
 }

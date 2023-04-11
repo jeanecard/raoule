@@ -1,5 +1,6 @@
 ﻿using Entities;
 using Microsoft.EntityFrameworkCore;
+using Repositories.Configurations;
 
 namespace Repositories
 {
@@ -12,8 +13,13 @@ namespace Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfiguration(new CompanyConfiguration());
-            //modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+            modelBuilder.Ignore(nameof(Object));
+            modelBuilder.ApplyConfiguration(new OiseauConfiguration());
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+
         }
 
         public DbSet<LieuObservation>? LieuxObservations { get; set; }

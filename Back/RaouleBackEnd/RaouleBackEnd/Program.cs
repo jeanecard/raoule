@@ -1,14 +1,18 @@
 using RaouleBackEnd.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
 
 // Add services to the container.
-builder.Services.ConfigureSqlContext(builder.Configuration);
+services.ConfigureSqlContext(builder.Configuration);
+services.ConfigureServiceManager();
+services.ConfigureRepositoryManager();
+services.ConfigureLoggerService();
 
-builder.Services.AddControllers();
+services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
 
 var app = builder.Build();
 

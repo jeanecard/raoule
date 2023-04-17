@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Service.Contracts;
+using Shared.Dto;
+using Shared.RequestFeatures;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,11 +11,26 @@ namespace RaouleBackEnd.Controllers
     [ApiController]
     public class OiseauController : ControllerBase
     {
+        private readonly IServiceManager _service;
+        public OiseauController(IServiceManager serv)
+        {
+            _service = serv;
+        }
         // GET: api/<OiseauController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<OiseauDto>> GetAsync()
         {
-            return new string[] { "value1", "value2" };
+            var oiseaux = await _service.OiseauService.GetOiseauxByAsync(
+                new OiseauParameters()
+                {
+                    NomVernaculaireLike = "psit",
+                    NomLike="grive"
+                });
+            if(oiseaux == null)
+            {
+                return new List<OiseauDto>();
+            }
+            return oiseaux;
         }
 
         // GET api/<OiseauController>/5

@@ -8,8 +8,11 @@ namespace Entities
         [Column("Id")]
         public Guid Id { get; set; }
 
-        [Required(ErrorMessage = "Caption is a required field.")]
-        [MaxLength(60, ErrorMessage = "Maximum length for the Caption is 60 characters.")]
-        public string? Caption { get; set; }
+        [Required(ErrorMessage = "Nom est un champ obligatoire.")]
+        [MaxLength(60, ErrorMessage = "Longueur maximale pour le champ Nom : 60.")]
+        public string? Nom { get; set; }
+        public string? NomVernaculaire{ get; set; }
+
+
     }
 }

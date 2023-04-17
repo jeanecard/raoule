@@ -18,17 +18,20 @@ namespace Repositories.Configurations
             new Oiseau()
             {
                 Id = _ID1,
-                Caption = "Turdus merula"
+                NomVernaculaire = "Turdus merula",
+                Nom = "Merle noir"
             },
             new Oiseau()
             {
                 Id = _ID2,
-                Caption = "Psitacus erithacus"
+                NomVernaculaire = "Psitacus erithacus",
+                Nom = "Gris du Gabon"
             },
             new Oiseau()
             {
                 Id = _ID3,
-                Caption = "Turdus philomelos"
+                NomVernaculaire = "Turdus philomelos",
+                Nom = "Grive musicienne"
             }
             };
             builder.HasData(oiseaux);

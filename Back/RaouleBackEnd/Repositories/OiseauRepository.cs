@@ -1,6 +1,8 @@
 ﻿using Contracts;
 using Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Shared.RequestFeatures;
 
 namespace Repositories
 {
@@ -28,14 +30,26 @@ namespace Repositories
                       .SingleOrDefaultAsync();
         }
 
-        public async Task<List<Oiseau>> GetOiseauxAsync(bool trackChanges)
+        public IQueryable<Oiseau> GetOiseaux(OiseauParameters param, bool trackChanges)
         {
-            var result =  await FindAll(trackChanges).ToListAsync();
-            if(result == null)
+            if(String.IsNullOrEmpty(param.NomVernaculaireLike)
+                && String.IsNullOrEmpty(param.NomLike))
             {
-                result = new List<Oiseau>();
+                return FindAll(trackChanges);
+
             }
-            return result;
+            else
+            {
+                return FindByCondition(oiseau =>test(oiseau, param), trackChanges);
+            }
+           
+        }
+        private bool test(Oiseau oiseau, OiseauParameters param)
+        {
+            if (param?.NomVernaculaireLike == null || param?.NomLike == null)
+                throw new ArgumentNullException("Param");
+            return oiseau.NomVernaculaire.Contains(param.NomVernaculaireLike)
+                || oiseau.Nom.Contains(param.NomLike);
         }
     }
 }

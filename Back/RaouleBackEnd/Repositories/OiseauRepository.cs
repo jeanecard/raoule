@@ -1,7 +1,6 @@
 ﻿using Contracts;
 using Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Shared.RequestFeatures;
 
 namespace Repositories
@@ -29,27 +28,41 @@ namespace Repositories
                 trackChanges)
                       .SingleOrDefaultAsync();
         }
-
+        /// <summary>
+        /// Possibilité de passer également par une requête linq 
+        ///  return from oiseau in DbContext.Set<Oiseau>() 
+        ///       where 
+        ///       oiseau.NomVernaculaire.Contains(param.NomVernaculaireLike) 
+        ///       ||
+        ///       oiseau.Nom.Contains(param.NomLike)
+        ///      select oiseau;
+        /// </summary>
+        /// <param name="param"></param>
+        /// <param name="trackChanges"></param>
+        /// <returns></returns>
         public IQueryable<Oiseau> GetOiseaux(OiseauParameters param, bool trackChanges)
         {
             if(String.IsNullOrEmpty(param.NomVernaculaireLike)
                 && String.IsNullOrEmpty(param.NomLike))
             {
                 return FindAll(trackChanges);
-
+            }
+            else if(String.IsNullOrEmpty(param.NomVernaculaireLike))
+            {
+                return FindByCondition(oiseau => oiseau.Nom.Contains(param.NomLike), 
+                trackChanges);
+            }
+            else if(String.IsNullOrEmpty(param.NomLike))
+            {
+                return FindByCondition(oiseau => oiseau.NomVernaculaire.Contains(param.NomVernaculaireLike),
+                trackChanges);
             }
             else
             {
-                return FindByCondition(oiseau =>test(oiseau, param), trackChanges);
+                return FindByCondition(oiseau =>
+                (oiseau.NomVernaculaire.Contains(param.NomVernaculaireLike) && oiseau.Nom.Contains(param.NomLike)),
+                trackChanges);
             }
-           
-        }
-        private bool test(Oiseau oiseau, OiseauParameters param)
-        {
-            if (param?.NomVernaculaireLike == null || param?.NomLike == null)
-                throw new ArgumentNullException("Param");
-            return oiseau.NomVernaculaire.Contains(param.NomVernaculaireLike)
-                || oiseau.Nom.Contains(param.NomLike);
         }
     }
 }

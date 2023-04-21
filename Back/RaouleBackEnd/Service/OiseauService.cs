@@ -1,6 +1,5 @@
 ﻿using Contracts;
 using Mapster;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Service.Contracts;
 using Shared.Dto;

@@ -4,12 +4,15 @@ using Repositories.Configurations;
 
 namespace Repositories
 {
-    public sealed class RepositoryContext : DbContext
+    public class RepositoryContext : DbContext
     {
         public RepositoryContext(DbContextOptions options)
     : base(options)
         {
         }
+
+        public RepositoryContext()
+        { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,6 +27,6 @@ namespace Repositories
 
         public DbSet<LieuObservation>? LieuxObservations { get; set; }
         public DbSet<Observation>? Observations { get; set; }
-        public DbSet<Oiseau>? Oiseaux { get; set; }
+        public virtual DbSet<Oiseau>? Oiseaux { get; set; }
     }
 }

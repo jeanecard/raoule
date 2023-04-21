@@ -7,11 +7,11 @@ namespace Entities
     {
         [Column("Id")]
         public Guid Id { get; set; }
-
         [Required(ErrorMessage = "Nom est un champ obligatoire.")]
         [MaxLength(60, ErrorMessage = "Longueur maximale pour le champ Nom : 60.")]
-        public string? Nom { get; set; }
-        public string? NomVernaculaire{ get; set; }
+        public string Nom { get; set; } = String.Empty;
+        [Required(AllowEmptyStrings = true)]
+        public string NomVernaculaire { get; set; } = String.Empty;
 
 
     }

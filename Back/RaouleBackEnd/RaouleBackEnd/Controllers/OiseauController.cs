@@ -18,14 +18,9 @@ namespace RaouleBackEnd.Controllers
         }
         // GET: api/<OiseauController>
         [HttpGet]
-        public async Task<IEnumerable<OiseauDto>> GetAsync()
+        public async Task<IEnumerable<OiseauDto>> GetAsync([FromQuery] OiseauParameters param)
         {
-            var oiseaux = await _service.OiseauService.GetOiseauxByAsync(
-                new OiseauParameters()
-                {
-                    NomVernaculaireLike = "psit",
-                    NomLike="grive"
-                });
+            var oiseaux = await _service.OiseauService.GetOiseauxByAsync(param);
             if(oiseaux == null)
             {
                 return new List<OiseauDto>();

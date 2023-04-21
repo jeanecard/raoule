@@ -8,8 +8,8 @@
             OrderBy = _NOM_FIELD;
         }
 
-        public string? NomVernaculaireLike { get; set; }
-        public string? NomLike { get; set; }
+        public string NomVernaculaireLike { get; init; } = String.Empty;
+        public string NomLike { get; init; } = String.Empty;
 
     }
 }

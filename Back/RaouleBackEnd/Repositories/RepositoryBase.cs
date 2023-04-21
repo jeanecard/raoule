@@ -6,7 +6,7 @@ namespace Repositories
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
-        protected DbContext DbContext;
+        public DbContext DbContext { get; set; }
 
         public RepositoryBase(DbContext repositoryContext)
             => DbContext = repositoryContext;

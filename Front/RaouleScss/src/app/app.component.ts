@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import Map from 'ol/Map';
-import View from 'ol/View';
-import TileLayer from 'ol/layer/Tile';
-import OSM from 'ol/source/OSM';
+import { HROpenLayerViewService } from './shared/services/hropen-layer-view.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +8,10 @@ import OSM from 'ol/source/OSM';
 })
 export class AppComponent implements OnInit {
 
+  constructor(private layerService : HROpenLayerViewService){
+    
+  }
   ngOnInit(): void {
+    this.layerService.loadViewOrigin();
   }
 }

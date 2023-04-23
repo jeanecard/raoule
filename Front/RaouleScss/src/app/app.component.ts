@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HROpenLayerViewService } from './shared/services/hropen-layer-view.service';
+import { HRViewCoordinate } from './shared/models/hrview-coordinate';
 
 @Component({
   selector: 'app-root',
@@ -13,5 +14,9 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     this.layerService.loadViewOrigin();
+    setInterval(()=> {
+      this.layerService.saveViewOrigin(new HRViewCoordinate())
+   }
+   ,10000);
   }
 }

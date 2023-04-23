@@ -52,6 +52,7 @@ export class HROpenLayerViewService {
       localStorage.setItem("HRViewOrigin.lat", value.origin[1].toString());
       localStorage.setItem("HRViewOrigin.zoom", value.zoom.toString());
       localStorage.setItem("HRViewOrigin.projection", value.projection);
+      this.mViewOrigin.next(value);
     }
   }
 

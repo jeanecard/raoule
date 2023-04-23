@@ -13,39 +13,43 @@ import { Subscription } from 'rxjs';
   templateUrl: './hropen-layer-displayer.component.html',
   styleUrls: ['./hropen-layer-displayer.component.scss']
 })
-export class HROpenLayerDisplayerComponent implements ControlValueAccessor, OnInit, OnDestroy{
-  
+export class HROpenLayerDisplayerComponent implements ControlValueAccessor, OnInit, OnDestroy {
+
   public map: Map | null = null;
   private _subscriptions = new Subscription();
 
 
-  constructor(private layerService : HROpenLayerViewService){
+  constructor(private layerService: HROpenLayerViewService) {
   }
   ngOnDestroy(): void {
     this._subscriptions.unsubscribe();
   }
 
   ngOnInit(): void {
+    // 1 création de la map
+    this.map = new Map({
+      layers: [
+        new TileLayer({
+          source: new OSM(),
+        }),
+      ],
+      target: 'ol-map'
+    });
+
+    // 2- Synchronisation sur l'observable CenterView
     this._subscriptions.add(
-      this.layerService.getViewOrigin$().subscribe(data => {
-      let center = data.origin;
-      if(data.projection === 'EPSG:4326')
-      {
-        center = olProj.fromLonLat([data.origin[0], data.origin[1]], 'EPSG:3857');
-      }
-      this.map = new Map({
-        view: new View({
+      this.layerService.getViewOrigin$().subscribe(
+        data => {
+        let center = data.origin;
+        if (data.projection === 'EPSG:4326') {
+          center = olProj.fromLonLat([data.origin[0], data.origin[1]], 'EPSG:3857');
+        }
+        const view: View = new View({
           center: center,
           zoom: data.zoom,
-        }),
-        layers: [
-          new TileLayer({
-            source: new OSM(),
-          }),
-        ],
-        target: 'ol-map'
-      });
-    })
+        });
+        this.map?.setView(view);
+      })
     );
   }
   writeValue(obj: any): void {
